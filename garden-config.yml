@@ -1,0 +1,38 @@
+
+# Time Intervals Example: 1 h, 30 m, 15 m, 5 h...
+# Always separate it with a space.
+
+fruits:
+  apple:
+    regrowth_time: '1 h'
+    harvesting_interval: '30 m'
+    watering_interval: '1 h'
+  strawberry:
+    regrowth_time: '20 m'
+    harvesting_interval: '30 m'
+    watering_interval: '1 h'
+
+flowers:
+  sunflower:
+    watering_interval: '1 h' 
+    pollination_interval: '45 m'
+  rose:
+    watering_interval: '1 h'
+    pollination_interval: '45 m'
+  orchid:
+    watering_interval: '1 h'
+    pollination_interval: '1 h'
+
+decorations:
+  bench:
+    cleaning_interval: '30 m'
+
+animals:
+  dog:
+    feeding_interval: '10 m'
+  duck:
+    feeding_interval: '30 m'
+
+users:
+  max_users: 4
+  max_nickname_length: 15
