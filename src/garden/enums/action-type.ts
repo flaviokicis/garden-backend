@@ -1,10 +1,15 @@
 
-export enum ActionType {
+enum ActionType {
+
     HARVEST,
     WATER,
     POLLINATE,
     PET,
     FEED,
-    SIT,
+    SIT_DOWN,
+    STAND_UP,
     CLEAN
+
 }
+
+export default ActionType;

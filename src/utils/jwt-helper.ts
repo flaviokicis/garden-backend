@@ -2,7 +2,7 @@ import { Response } from "express";
 import jwt from "jsonwebtoken";
 
 export function generateToken(userID: string): string {
-    return jwt.sign({ userID: userID }, process.env.APP_SECRET as string, { expiresIn: '24h' });
+    return jwt.sign({ userID: userID }, process.env.APP_SECRET as string);
 }
 
 export function signUser(expressResponse: Response, token: string) {

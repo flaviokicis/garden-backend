@@ -4,10 +4,14 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import Logger from "../logger/winston-logger";
-import registerRoutes from "../routes/registry/routes-registry";
+import registerRoutes from "../routes/v1/registry/routes-registry";
 import path from "path";
 import MongoDatabase from "../database/mongo-connector";
-
+import UserController from "../database/controllers/user-controller";
+import ActionType from "../garden/enums/action-type";
+import xssSanitizer from 'xss-clean';
+import mongoSanitizer from 'express-mongo-sanitize';
+import { errorConverter, errorHandler } from "../middleware/error-handler";
 
 class App {
 
@@ -47,13 +51,18 @@ class App {
     }
 
     private loadMiddleware() {
+        // Use Json and serve React
         this.app.use(json());
         this.app.use(express.urlencoded({ extended: false }));
-        console.log(path.join(__dirname, '../../public'));
         this.app.use(express.static(path.join(__dirname, '../../public')));
+        // Cookie
         this.app.use(cookieParser());
+        // Security 
         this.app.use(helmet());
+        this.app.use(xssSanitizer());
+        this.app.use(mongoSanitizer());
         this.app.use(cors());
+        // Logger
         this.app.use(morgan('combined', {
             stream: {
                 write: (text: string) => {
@@ -68,7 +77,10 @@ class App {
     }
 
     private loadRoutes() {
-        this.app.use('/api', registerRoutes());
+        this.app.use('/api/v1', registerRoutes());
+        // Convert and handle
+        this.app.use(errorConverter);
+        this.app.use(errorHandler);
     }
 
     public start(port: string | number) {

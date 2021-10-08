@@ -1,5 +1,5 @@
 
-export enum EntityType {
+enum EntityType {
 
     FRUIT,
     FLOWER,
@@ -7,3 +7,5 @@ export enum EntityType {
     DECORATION
 
 }
+
+export default EntityType;

@@ -26,6 +26,7 @@ flowers:
 decorations:
   bench:
     cleaning_interval: '30 m'
+    limit: 2
 
 animals:
   dog:
