@@ -13,4 +13,12 @@ export default class ResponseWrapper {
         this.json = json;
     }
 
+    public toResponse() {
+        return {
+            error: this.errorCode,
+            message: (this.message ? this.message : ""),
+            json: (this.json ? this.json : "")
+        }
+    }
+
 }

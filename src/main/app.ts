@@ -3,7 +3,6 @@ import helmet from "helmet";
 import cors from 'cors';
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import RouteRegistry from "../routes/registry/routes-registry";
 import Logger from "../logger/winston-logger";
 import registerRoutes from "../routes/registry/routes-registry";
 import path from "path";
@@ -18,7 +17,7 @@ class App {
 
     constructor() {
         this.loadDatabase();
-        this.loadHeaders();
+        this.setHeaders();
         this.loadMiddleware();
         this.loadErrorHandling();
         this.loadRoutes();
@@ -28,7 +27,7 @@ class App {
         this.db.connect(process.env.MONGO_URL as string);
     }
 
-    private loadHeaders() {
+    private setHeaders() {
         this.app.use(function (req: Request, res: Response, next) {
             res.setHeader("Access-Control-Allow-Origin", "*");
             res.setHeader(
@@ -65,7 +64,7 @@ class App {
     }
 
     private loadErrorHandling() {
-
+        // Todo
     }
 
     private loadRoutes() {
