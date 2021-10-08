@@ -7,11 +7,14 @@ import RouteRegistry from "../routes/registry/routes-registry";
 import Logger from "../logger/winston-logger";
 import registerRoutes from "../routes/registry/routes-registry";
 import path from "path";
+import MongoDatabase from "../database/mongo-connector";
 
 
 class App {
 
     private app: Application = express();
+
+    private db: MongoDatabase = new MongoDatabase();
 
     constructor() {
         this.loadDatabase();
@@ -22,7 +25,7 @@ class App {
     }
 
     private async loadDatabase() {
-        // TODO
+        this.db.connect(process.env.MONGO_URL as string);
     }
 
     private loadHeaders() {

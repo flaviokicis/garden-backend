@@ -7,7 +7,7 @@ const formatOptions = printf(({ level, message, timestamp, ...metadata }) => {
     let msg = `${timestamp} [${level}] : ${message} `
     return msg
 });
-// Create Winston Logger
+// Create Winston Logger and set config
 const Logger: Logger = winston.createLogger({
     format: combine(
         format.colorize(),

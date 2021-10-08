@@ -1,6 +1,7 @@
 import App from "./main/app";
 import dotenv from "dotenv";
 
+// Config .env
 dotenv.config();
 
 const app = new App();

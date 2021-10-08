@@ -1,8 +1,9 @@
 {
   "name": "garden-back",
   "version": "1.0.1",
-  "description": "A garden that multiple people can join",
+  "description": "A virtual garden for all kinds of folks",
   "main": "build/index.js",
+  "author": "Marcos Kicis",
   "scripts": {
     "start": "node ./build/src/index.js",
     "build": "tsc",
@@ -16,7 +17,6 @@
     "url": "git+https://github.com/hastoontests/desafio-d1.git"
   },
   "keywords": [],
-  "author": "",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hastoontests/desafio-d1/issues"
