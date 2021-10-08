@@ -1,0 +1,54 @@
+{
+  "name": "garden-back",
+  "version": "1.0.1",
+  "description": "A garden that multiple people can join",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "node ./build/src/index.js",
+    "build": "tsc",
+    "debug": "tsc --watch",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn ./src/index.ts",
+    "prod": "tsc && node ./build/src/index.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hastoontests/desafio-d1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hastoontests/desafio-d1/issues"
+  },
+  "homepage": "https://github.com/hastoontests/desafio-d1#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "http-errors": "^1.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "mongoose": "^6.0.9",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/morgan": "^1.9.3",
+    "@types/winston": "^2.4.4",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.13",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^16.10.3",
+    "jest": "^27.2.4",
+    "ts-node-dev": "^1.1.8"
+  }
+}
