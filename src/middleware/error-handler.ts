@@ -30,8 +30,9 @@ const errorHandler = (err: ResponseWrapper, req: Request, res: Response, next: N
     let message = err.getMessage();
 
     if (process.env.ENV_TYPE === 'PROD' && !err.getCarryOn()) {
-        code = httpStatus.INTERNAL_SERVER_ERROR;
-        message = httpStatus[httpStatus.INTERNAL_SERVER_ERROR] as string;
+        code = httpErrors.INTERNAL_SERVER_ERROR;
+        // @ts-ignore 
+        message = httpErrors[httpErrors.INTERNAL_SERVER_ERROR] as string;
     }
 
     res.locals.errorMessage = message;
