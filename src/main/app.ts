@@ -7,11 +7,11 @@ import Logger from "../logger/winston-logger";
 import registerRoutes from "../routes/v1/registry/routes-registry";
 import path from "path";
 import MongoDatabase from "../database/mongo-connector";
-import UserController from "../database/controllers/user-controller";
-import ActionType from "../garden/enums/action-type";
 import xssSanitizer from 'xss-clean';
 import mongoSanitizer from 'express-mongo-sanitize';
 import { errorConverter, errorHandler } from "../middleware/error-handler";
+import gardenManager from "../garden/managers/garden-manager";
+import NodeCronScheduler from "../wrappers/node-cron-wrapper";
 
 class App {
 
@@ -23,7 +23,7 @@ class App {
         this.loadDatabase();
         this.setHeaders();
         this.loadMiddleware();
-        this.loadErrorHandling();
+        this.loadGarden();
         this.loadRoutes();
     }
 
@@ -72,8 +72,9 @@ class App {
         }));
     }
 
-    private loadErrorHandling() {
-        // Todo
+    private loadGarden() {
+        gardenManager.setScheduler(new NodeCronScheduler())
+        gardenManager.createEntities();
     }
 
     private loadRoutes() {

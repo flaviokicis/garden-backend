@@ -2,15 +2,27 @@
 # Time Intervals Example: 1 h, 30 m, 15 m, 5 h...
 # Always separate it with a space.
 
+garden:
+  fruits:
+    - 'strawberry:5'
+    - 'apple:5'
+  flowers:
+    - 'sunflower:3'
+    - 'rose:5'
+    - 'orchid:2'
+  decorations:
+    - 'bench:1'
+  animals:
+    - 'dog:1'
+    - 'duck:1'
+
 fruits:
   apple:
-    regrowth_time: '1 h'
-    harvesting_interval: '30 m'
-    watering_interval: '1 h'
+    harvesting_interval: '45 m'
+    watering_interval: '4 h'
   strawberry:
-    regrowth_time: '20 m'
     harvesting_interval: '30 m'
-    watering_interval: '1 h'
+    watering_interval: '45 m'
 
 flowers:
   sunflower:

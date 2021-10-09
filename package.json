@@ -1,6 +1,6 @@
 {
   "name": "garden-back",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A virtual garden for all kinds of folks",
   "main": "build/index.js",
   "author": "Marcos Kicis",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/hastoontests/desafio-d1#readme",
   "dependencies": {
+    "@types/node-cron": "^3.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
