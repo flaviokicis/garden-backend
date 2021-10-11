@@ -2,58 +2,58 @@ import EntityType from "../../enums/entity-type";
 import gardenManager from "../../managers/garden-manager";
 import Scheduler from "../scheduler";
 import GardenUser from "../user";
-import BaseFruit from "./base/base-fruit";
+import BaseFlower from "./base/base-flower";
 
-export default class Apple extends BaseFruit {
+export default class Orchid extends BaseFlower {
 
-    private harvestTime: string;
+    private pollinateTime: string;
 
     private waterTime: string;
 
-    private ableToHarvest: boolean = true;
+    private ableToPollinate: boolean = true;
 
     private ableToWater: boolean = false;
 
     private scheduler: Scheduler;
 
-    constructor(id: number, harvestTime: string, waterTime: string, scheduler: Scheduler) {
+    constructor(id: number, pollinateTime: string, waterTime: string, scheduler: Scheduler) {
         super(id);
         this.scheduler = scheduler;
-        this.harvestTime = harvestTime;
+        this.pollinateTime = pollinateTime;
         this.waterTime = waterTime;
         this.init();
     }
 
     protected init() {
-        this.waterFruit(undefined);
+        this.waterFlower(undefined);
     }
 
     public getEntityType(): EntityType {
-        return EntityType.FRUIT;
+        return EntityType.FLOWER;
     }
 
     public getName(): String {
-        return "Strawberry";
+        return "Orchid";
     }
 
-    public canHarvest(): boolean {
-        return this.ableToHarvest;
+    public canPollinate(): boolean {
+        return this.ableToPollinate;
     }
 
     public canWater(): boolean {
         return this.ableToWater;
     }
 
-    public harvestFruit(user: GardenUser): void {
-        this.ableToHarvest = false;
+    public pollinateFlower(user: GardenUser): void {
+        this.ableToPollinate = false;
         gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.harvestTime, async () => {
-            this.ableToHarvest = true;
+        this.scheduler.scheduleTask(this.pollinateTime, async () => {
+            this.ableToPollinate = true;
             gardenManager.updateState(this);
         });
     }
 
-    public waterFruit(user: GardenUser): void {
+    public waterFlower(user: GardenUser): void {
         this.ableToWater = false;
         gardenManager.updateState(this, user);
         this.scheduler.scheduleTask(this.waterTime, async () => {
@@ -67,7 +67,7 @@ export default class Apple extends BaseFruit {
             entityId: this.id,
             type: this.getEntityType(),
             name: this.getName(),
-            ableToHarvest: this.ableToHarvest,
+            ableToPollinate: this.ableToPollinate,
             ableToWater: this.ableToWater
         };
     }

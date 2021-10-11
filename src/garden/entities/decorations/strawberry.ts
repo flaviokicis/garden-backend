@@ -33,7 +33,7 @@ export default class Apple extends BaseFruit {
     }
 
     public getName(): String {
-        return "Strawberry";
+        return "Apple";
     }
 
     public canHarvest(): boolean {
@@ -47,7 +47,7 @@ export default class Apple extends BaseFruit {
     public harvestFruit(user: GardenUser): void {
         this.ableToHarvest = false;
         gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.harvestTime, async () => {
+        this.scheduler.scheduleTask(this.waterTime, async () => {
             this.ableToHarvest = true;
             gardenManager.updateState(this);
         });

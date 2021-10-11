@@ -12,6 +12,9 @@ import mongoSanitizer from 'express-mongo-sanitize';
 import { errorConverter, errorHandler } from "../middleware/error-handler";
 import gardenManager from "../garden/managers/garden-manager";
 import NodeCronScheduler from "../wrappers/node-cron-wrapper";
+import ControllerInstanceManager from '../garden/utils/DatabaseInstance';
+import userController from "../database/controllers/user-controller";
+import UserController from "../database/controllers/user-controller";
 
 class App {
 
@@ -28,7 +31,8 @@ class App {
     }
 
     private async loadDatabase() {
-        this.db.connect(process.env.MONGO_URL as string);
+        await this.db.connect(process.env.MONGO_URL as string);
+        ControllerInstanceManager.setInstance(new UserController());
     }
 
     private setHeaders() {
@@ -48,6 +52,7 @@ class App {
             );
             next();
         });
+        this.app.set('trust proxy', true)
     }
 
     private loadMiddleware() {
@@ -61,7 +66,11 @@ class App {
         this.app.use(helmet());
         this.app.use(xssSanitizer());
         this.app.use(mongoSanitizer());
-        this.app.use(cors());
+        const corsConfig = {
+            credentials: true,
+            origin: true,
+        };
+        this.app.use(cors(corsConfig));
         // Logger
         this.app.use(morgan('combined', {
             stream: {

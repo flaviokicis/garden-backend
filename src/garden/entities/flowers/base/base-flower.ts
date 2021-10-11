@@ -3,33 +3,33 @@ import ActionType from '../../../enums/action-type';
 import GardenUser from "../../user";
 
 
-abstract class BaseFruit extends BaseEntity {
+abstract class BaseFlower extends BaseEntity {
 
     constructor(id: number) {
         super(id);
     }
 
-    public abstract canHarvest(): boolean;
+    public abstract canPollinate(): boolean;
 
     public abstract canWater(): boolean;
 
-    public abstract harvestFruit(user: GardenUser): void;
+    public abstract pollinateFlower(user: GardenUser): void;
 
-    public abstract waterFruit(user: GardenUser): void;
+    public abstract waterFlower(user: GardenUser): void;
 
     protected abstract init(): void;
 
     public execute(user: GardenUser, action: ActionType): void {
-        if (action === ActionType.HARVEST) {
-            this.harvestFruit(user);
+        if (action === ActionType.POLLINATE) {
+            this.pollinateFlower(user);
         } else if (action == ActionType.WATER) {
-            this.waterFruit(user);
+            this.waterFlower(user);
         }
     }
 
     public canPerform(user: GardenUser, action: ActionType): boolean {
-        if (action === ActionType.HARVEST)
-            return this.canHarvest();
+        if (action === ActionType.POLLINATE)
+            return this.canPollinate();
         else if (action === ActionType.WATER) {
             return this.canWater();
         } else return false;
@@ -37,4 +37,4 @@ abstract class BaseFruit extends BaseEntity {
 
 }
 
-export default BaseFruit;
+export default BaseFlower;

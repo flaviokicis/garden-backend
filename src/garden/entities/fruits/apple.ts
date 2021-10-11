@@ -1,5 +1,7 @@
 import EntityType from "../../enums/entity-type";
 import gardenManager from "../../managers/garden-manager";
+import Scheduler from "../scheduler";
+import GardenUser from "../user";
 import BaseFruit from "./base/base-fruit";
 
 export default class Apple extends BaseFruit {
@@ -23,7 +25,7 @@ export default class Apple extends BaseFruit {
     }
 
     protected init() {
-        this.waterFruit();
+        this.waterFruit(undefined);
     }
 
     public getEntityType(): EntityType {
@@ -42,18 +44,18 @@ export default class Apple extends BaseFruit {
         return this.ableToWater;
     }
 
-    public harvestFruit(): void {
+    public harvestFruit(user: GardenUser): void {
         this.ableToHarvest = false;
-        gardenManager.updateState(this);
-        this.scheduler.scheduleTask(this.waterTime, async () => {
+        gardenManager.updateState(this, user);
+        this.scheduler.scheduleTask(this.harvestTime, async () => {
             this.ableToHarvest = true;
             gardenManager.updateState(this);
         });
     }
 
-    public waterFruit(): void {
+    public waterFruit(user: GardenUser): void {
         this.ableToWater = false;
-        gardenManager.updateState(this);
+        gardenManager.updateState(this, user);
         this.scheduler.scheduleTask(this.waterTime, async () => {
             this.ableToWater = true;
             gardenManager.updateState(this);

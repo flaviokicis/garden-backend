@@ -1,5 +1,6 @@
 import EntityType from "../../enums/entity-type";
 import ActionType from '../../enums/action-type';
+import GardenUser from "../user";
 
 abstract class BaseEntity {
 
@@ -19,11 +20,11 @@ abstract class BaseEntity {
 
     protected abstract init(): void;
 
-    public abstract canPerform(action: ActionType): boolean;
+    public abstract canPerform(user: GardenUser, action: ActionType): boolean;
 
-    public abstract execute(action: ActionType): void;
+    public abstract execute(user: GardenUser, action: ActionType): void;
 
-    public abstract toState(): Object;
+    public abstract toState(user?: GardenUser): Object;
 
 }
 

@@ -5,7 +5,7 @@ export default class ResponseWrapper {
     private errorCode: number;
     private message: string;
     private json: Object;
-    private carryOn: boolean;
+    private carryOn: boolean = true;
 
     constructor(errorCode: number, message?: string, json?: Object, carryOn?: boolean) {
         this.errorCode = errorCode;

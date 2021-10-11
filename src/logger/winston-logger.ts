@@ -13,7 +13,7 @@ const Logger: Logger = winston.createLogger({
         format.colorize(),
         splat(),
         timestamp({
-            format: 'YYYY-MM-DD HH:mm:ss:ms'
+            format: 'YYYY-MM-DD HH:mm:ss'
         }),
         formatOptions
     ),
