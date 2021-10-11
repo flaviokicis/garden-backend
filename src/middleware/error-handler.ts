@@ -44,7 +44,7 @@ const errorHandler = (err: ResponseWrapper, req: Request, res: Response, next: N
     };
 
     if (process.env.ENV_TYPE === 'DEV') {
-        Logger.error(err);
+        Logger.info(err);
     }
 
     res.status(code).send(response);
