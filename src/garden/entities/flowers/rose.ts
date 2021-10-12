@@ -4,7 +4,7 @@ import Scheduler from "../scheduler";
 import GardenUser from "../user";
 import BaseFlower from "./base/base-flower";
 
-export default class Orchid extends BaseFlower {
+export default class Rose extends BaseFlower {
 
     private pollinateTime: string;
 
@@ -33,7 +33,7 @@ export default class Orchid extends BaseFlower {
     }
 
     public getName(): String {
-        return "Orchid";
+        return "Rose";
     }
 
     public canPollinate(): boolean {

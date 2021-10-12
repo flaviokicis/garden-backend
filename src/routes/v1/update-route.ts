@@ -6,16 +6,9 @@ import connectionManager from "../../managers/connection-manager";
 import authentication from "../../middleware/auth";
 import ClientWrapper from "../../wrappers/client-wrapper";
 
-const listenRouter = express.Router();
+const updateRouter = express.Router();
 
-const facts = ["Sombras são vermelhas"];
-let clients: Array<any> = [];
-
-gardenManager.registerListener((state) => {
-    console.log(state);
-});
-
-listenRouter.post('/', authentication, async (req: Request, res: Response, next) => {
+updateRouter.post('/', authentication, async (req: Request, res: Response, next) => {
 
     const id = req.body.userID;
     
@@ -32,8 +25,11 @@ listenRouter.post('/', authentication, async (req: Request, res: Response, next)
         return next(createResponse(400, "Entity ID is not defined."));
     }
     const entityId = req.body.entityId;
-
-    gardenManager.interact(id, action, entityId);
+    try {
+    await gardenManager.interact(id, action, entityId);
+    } catch (error: any) {
+        next(createResponse(500, error.message));
+    }
 });
 
-export default listenRouter;
+export default updateRouter;

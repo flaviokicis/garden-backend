@@ -4,6 +4,7 @@ class EntityManager {
 
     private entities: Map<number, BaseEntity>;
 
+    // Could use UUID
     private idCounter: number = 0;
 
     constructor() {
@@ -11,8 +12,12 @@ class EntityManager {
     }
 
     public registerEntity(entity: BaseEntity): number {
-        const id = this.idCounter++;
+        let id = ++this.idCounter;
+        while (this.entities.has(id)) {
+            id = id + 1;
+        }
         this.entities.set(id, entity);
+        entity.updateID(id);
         return id;
     }
 
@@ -22,6 +27,11 @@ class EntityManager {
 
     public isEntity(id: number): boolean {
         return this.entities.has(id);
+    }
+
+    public getAllEntities(): Array<BaseEntity> {
+        const entities = [...this.entities.values()];
+        return entities;
     }
 
 }

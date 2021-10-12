@@ -13,11 +13,6 @@ listenRouter.get('/', authentication, async (req: Request, res: Response, next) 
     const id = req.body.userID;
     const ip = req.ip;
     const client = new ClientWrapper(id, res, ip);
-    if (!(await connectionManager.register(client))) {
-        return next(createResponse(403, "The server is busy"));
-    }
-
-    // Setup Server-Sent Events
     res.set({
         'Cache-Control': 'no-cache',
         'Content-Type': 'text/event-stream',
@@ -25,6 +20,11 @@ listenRouter.get('/', authentication, async (req: Request, res: Response, next) 
       });
 
     res.flushHeaders();
+    if (!(await connectionManager.register(client))) {
+        return next(createResponse(403, "The server is busy"));
+    }
+    console.log(await connectionManager.getGardenersOnline());
+    // Setup Server-Sent Events
 
     // When connection closes
     req.on('close', () => {

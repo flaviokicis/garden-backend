@@ -12,17 +12,17 @@ export interface ConfigWrapper {
 
 export interface GardenType {
 
-    fruits: Array<string>,
-    flowers: Array<string>,
-    decorations: Array<string>,
-    animals: Array<string>
+    fruits: {apples: number, strawberries: number},
+    flowers: {orchids: number, roses: number, sunflowers: number},
+    decorations: {benches: number},
+    animals: {dogs: number, ducks: number}
 
 }
 
 export interface FruitsType {
 
-    apple: {harvesting_interval: string, watering_interval: string},
-    strawberry: {harvesting_interval: string, watering_interval: string}
+    apple: {max: number, respawn_interval: string, harvesting_interval: string, watering_interval: string},
+    strawberry: {max: number, respawn_interval: string, harvesting_interval: string, watering_interval: string}
 
 }
 
@@ -42,8 +42,8 @@ export interface DecorationsType {
 
 export interface AnimalsType {
     
-    dog: {feeding_interval: string},
-    duck: {feeding_interval: string}
+    dog: {petting_interval: string, feeding_interval: string},
+    duck: {petting_interval: string, feeding_interval: string}
 
 }
 

@@ -5,6 +5,6 @@ import jwt from "jsonwebtoken";
     but the stakes for an online garden are pretty low and there are not major problems
 */
 
-export function generateToken(userID: string): string {
-    return jwt.sign({ userID: userID }, process.env.APP_SECRET as string, {expiresIn: 9999999});
+export function generateToken(userID: string, nickname: string): string {
+    return jwt.sign({ userID: userID, nickname }, process.env.APP_SECRET as string, {expiresIn: 9999999});
 }

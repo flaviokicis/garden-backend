@@ -14,6 +14,10 @@ abstract class BaseEntity {
         return this.id;
     }
 
+    public updateID(id: number): void {
+        this.id = id;
+    }
+
     public abstract getEntityType(): EntityType;
 
     public abstract getName(): String;

@@ -9,16 +9,18 @@ export default function authentication(req: Request, res: Response, next) {
        res.status(401);
        return res.send(createResponse(401, "Unauthorized").toResponse());
     }
+
     try {
 
-    jwt.verify(token, process.env.APP_SECRET as string, (err: any, user: any) => {
+    jwt.verify(token, process.env.APP_SECRET as string, (err: any, payload: any) => {
         // Redirect
         if (err) {
             res.clearCookie("garden-user-token");
             res.status(401);
             return res.send(createResponse(401, "Invalid Token").toResponse())
         }
-        req.body.userID = user;
+        req.body.userID = payload.userID;
+        req.body.nickname = payload.nickname;
         next();
     })
     } catch (error) {

@@ -83,7 +83,7 @@ class App {
 
     private loadGarden() {
         gardenManager.setScheduler(new NodeCronScheduler())
-        gardenManager.createEntities();
+        gardenManager.setupGarden();
     }
 
     private loadRoutes() {

@@ -10,22 +10,27 @@ export default class Apple extends BaseFruit {
 
     private waterTime: string;
 
-    private ableToHarvest: boolean = true;
+    private ableToHarvest: boolean = false;
 
     private ableToWater: boolean = false;
 
+    private harvested: boolean = false;
+
     private scheduler: Scheduler;
 
-    constructor(id: number, harvestTime: string, waterTime: string, scheduler: Scheduler) {
+    constructor(id: number, harvestTime: string, waterTime: string) {
         super(id);
-        this.scheduler = scheduler;
+        this.scheduler = gardenManager.getScheduler();
         this.harvestTime = harvestTime;
         this.waterTime = waterTime;
         this.init();
     }
 
     protected init() {
-        this.waterFruit(undefined);
+        this.waterFruit(null);
+        this.scheduler.scheduleTask(this.harvestTime, () => {
+            this.ableToHarvest = true;
+        })
     }
 
     public getEntityType(): EntityType {
@@ -46,11 +51,16 @@ export default class Apple extends BaseFruit {
 
     public harvestFruit(user: GardenUser): void {
         this.ableToHarvest = false;
+        this.harvested = true;
         gardenManager.updateState(this, user);
         this.scheduler.scheduleTask(this.harvestTime, async () => {
             this.ableToHarvest = true;
             gardenManager.updateState(this);
         });
+    }
+
+    public hasBeenHarvested(): boolean {
+        return this.harvested;
     }
 
     public waterFruit(user: GardenUser): void {
@@ -65,7 +75,7 @@ export default class Apple extends BaseFruit {
     public toState(): Object {
         return {
             entityId: this.id,
-            type: this.getEntityType(),
+            type: EntityType[this.getEntityType()],
             name: this.getName(),
             ableToHarvest: this.ableToHarvest,
             ableToWater: this.ableToWater

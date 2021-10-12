@@ -2,25 +2,32 @@
 # Time Intervals Example: 1 h, 30 m, 15 m, 5 h...
 # Always separate it with a space.
 
+## Garden:
+## This will be the initial amount
 garden:
   fruits:
-    - 'strawberry:5'
-    - 'apple:5'
+    strawberries: 3
+    apples: 4
   flowers:
-    - 'sunflower:3'
-    - 'rose:5'
-    - 'orchid:2'
+    sunflowers: 3
+    roses: 2
+    orchids: 2
   decorations:
-    - 'bench:1'
+    benches: 1
   animals:
-    - 'dog:1'
-    - 'duck:1'
+    dogs: 2
+    ducks: 1
 
+# max = maximum instances of fruit spawned
 fruits:
   apple:
+    max: 5
+    respawn_interval: '1 h'
     harvesting_interval: '45 m'
     watering_interval: '4 h'
   strawberry:
+    max: 4
+    respawn_interval: '35 m'
     harvesting_interval: '30 m'
     watering_interval: '45 m'
 
@@ -38,12 +45,13 @@ flowers:
 decorations:
   bench:
     cleaning_interval: '30 m'
-    limit: 2
 
 animals:
   dog:
-    feeding_interval: '10 m'
+    petting_interval: '15 m'
+    feeding_interval: '20 m'
   duck:
+    petting_interval: '35 m'
     feeding_interval: '30 m'
 
 users:

@@ -1,6 +1,6 @@
 {
   "name": "garden-back",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A virtual garden for all kinds of folks",
   "main": "build/index.js",
   "author": "Marcos Kicis",

@@ -1,22 +1,32 @@
+import GardenUser from "../garden/entities/user";
 import gardenManager from "../garden/managers/garden-manager";
+import userManager from "../garden/managers/user-manager";
 import Logger from "../logger/winston-logger";
 import GardenConfig from "../main/config";
 import ClientWrapper from "../wrappers/client-wrapper";
+import AbstractConnectionManager from "../wrappers/connection-manager-wrapper";
 
 
-class ConnectionManager {
+class ConnectionManager extends AbstractConnectionManager {
 
     private connectionMap: Map<string, ClientWrapper> = new Map();
 
     constructor() {
-        gardenManager.registerListener(this.update);
+        super();
+        gardenManager.setConnectionManager(this);
     }
 
     public async register(client: ClientWrapper): Promise<boolean> {
-        if (GardenConfig.users.max_users >= this.connectionMap.size) {
+        if (GardenConfig.users.max_users <= this.connectionMap.size) {
             return false;
         }
-
+        const data = await gardenManager.getGardenState();
+        const updateObject = {};
+        updateObject["eventType"] = "handshake";
+        updateObject["data"] = data;
+        const clientData = `data: ${JSON.stringify(updateObject)}\n\n`;
+        client.getResponse().write(clientData);
+        userManager.addUser(new GardenUser(client.getConnectionId(), "Jonas"));
         this.connectionMap.set(client.getConnectionId(), client);
         return true;
     }
@@ -24,7 +34,7 @@ class ConnectionManager {
     public async update(data) {
         const updateObject = {};
         updateObject["eventType"] = "update";
-        updateObject["updateData"] = data;
+        updateObject["data"] = data;
         const clientData = `data: ${JSON.stringify(updateObject)}\n\n`;
         for (let wrapper of this.connectionMap.values()) {
             const response = wrapper.getResponse();
@@ -38,9 +48,14 @@ class ConnectionManager {
 
     public async disconnect(id: string) {
         Logger.info(`${id} Connection closed`);
+        userManager.removeUser(id);
         this.connectionMap.delete(id);
         if (process.env.ENV_TYPE === 'DEV')
         Logger.info("Active Connections: " + this.connectionMap.size);
+    }
+
+    public async getGardenersOnline(): Promise<number> {
+        return this.connectionMap.size;
     }
     
 }
