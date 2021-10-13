@@ -2,12 +2,17 @@ import express, { Request, Response } from "express"
 import authentication from "../../middleware/auth";
 import { generateToken } from "../../utils/jwt-helper";
 import createResponse from "../../factory/response-factory";
+import ControllerInstanceManager from '../../garden/utils/database-instance';
 
 const authRouter = express.Router();
 
 authRouter.post('/login', async (req: Request, res: Response, next) => {
     const nickname = req.body.nickname;
-    const token = generateToken(nickname, nickname);
+    if (!nickname) {
+        return next(createResponse(400, "Invalid Nickname"));
+    }
+    const id = await ControllerInstanceManager.getInstance().createUser(nickname);
+    const token = generateToken(id, nickname);
     res.cookie('garden-user-token', token, {
         httpOnly: true,
         // Never expire, no risk, no stakes. Ez pz

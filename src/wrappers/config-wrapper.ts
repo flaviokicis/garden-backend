@@ -36,7 +36,7 @@ export interface FlowersType {
 
 export interface DecorationsType {
 
-    bench: { bench: {cleaning_interval: string, limit: number}}
+    bench: { bench: {cleaning_interval: string}}
 
 }
 

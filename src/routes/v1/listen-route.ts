@@ -23,7 +23,6 @@ listenRouter.get('/', authentication, async (req: Request, res: Response, next) 
     if (!(await connectionManager.register(client))) {
         return next(createResponse(403, "The server is busy"));
     }
-    console.log(await connectionManager.getGardenersOnline());
     // Setup Server-Sent Events
 
     // When connection closes

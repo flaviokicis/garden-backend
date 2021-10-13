@@ -8,6 +8,7 @@ import ActionType from "../enums/action-type";
 import EntityType from "../enums/entity-type";
 import EventType from "../enums/event-type";
 import GardenFactory from "../factory/garden-factory";
+import shuffle from "../utils/shuffe-list";
 import entityManager from "./entity-manager";
 import EntityManager from "./entity-manager";
 import userManager from "./user-manager";
@@ -80,11 +81,11 @@ class GardenManager {
     }
 
     public async getGardenState() {
-        const fruits = [];
-        const animals = [];
-        const flowers = [];
-        const decorations = [];
-        const objState = {};
+        let fruits = [];
+        let animals = [];
+        let flowers = [];
+        let decorations = [];
+        let objState = {};
         for (let entity of entityManager.getAllEntities()) {
            if (entity.getEntityType() === EntityType.FRUIT) {
                fruits.push(entity.toState());
@@ -97,6 +98,12 @@ class GardenManager {
                decorations.push(entity.toState());
            }
         }
+
+        // Shuffling them to give a more 'natural' feel to items
+        fruits = shuffle(fruits);
+        animals = shuffle(animals);
+        flowers = shuffle(flowers);
+        decorations = shuffle(decorations);
         objState["fruits"] = fruits;
         objState["animals"] = animals;
         objState["flowers"] = flowers;

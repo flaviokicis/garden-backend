@@ -30,7 +30,6 @@ abstract class BaseFruit extends BaseEntity {
     }
 
     public canPerform(user: GardenUser, action: ActionType): boolean {
-        console.log(action);
         if (action === ActionType.HARVEST)
             return this.canHarvest();
         else if (action === ActionType.WATER) {

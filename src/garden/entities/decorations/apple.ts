@@ -16,9 +16,9 @@ export default class Apple extends BaseFruit {
 
     private scheduler: Scheduler;
 
-    constructor(id: number, harvestTime: string, waterTime: string, scheduler: Scheduler) {
+    constructor(id: number, harvestTime: string, waterTime: string) {
         super(id);
-        this.scheduler = scheduler;
+        this.scheduler = gardenManager.getScheduler();
         this.harvestTime = harvestTime;
         this.waterTime = waterTime;
         this.init();

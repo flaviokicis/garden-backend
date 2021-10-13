@@ -31,7 +31,7 @@ const errorHandler = (err: ResponseWrapper, req: Request, res: Response, next: N
 
     if (process.env.ENV_TYPE === 'PROD' && !err.getCarryOn()) {
         code = httpErrors.INTERNAL_SERVER_ERROR;
-        // @ts-ignore 
+        // @ts-ignore
         message = httpErrors[httpErrors.INTERNAL_SERVER_ERROR] as string;
     }
 

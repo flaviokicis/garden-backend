@@ -4,13 +4,14 @@ import StatsRepository from "../repositories/stats-repository";
 import mongoose from "mongoose";
 import createResponse from "../../factory/response-factory";
 import httpError from 'http-status-enum'
-import { ControllerInstance } from "../../garden/utils/DatabaseInstance";
+import { ControllerInstance } from "../../garden/utils/database-instance";
 import GardenUser from "../../garden/entities/user";
 
 class UserController extends ControllerInstance {
 
     public async createUser(nickname) {
-
+        const user = await UserRepository.createNew({nickname: nickname});
+        return user._id;
     }
 
     public async getUser(id) {

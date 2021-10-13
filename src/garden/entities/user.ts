@@ -1,21 +1,31 @@
+import moment from "moment";
 
 
 class GardenUser {
 
     private id: string;
-    private nickname: string;
+    private lastSat;
 
-    constructor(id: string, nickname: string) {
+    constructor(id: string) {
         this.id = id;
-        this.nickname = nickname;
     }
 
     public getId() {
         return this.id;
     }
 
-    public getNickname() {
-        return this.nickname;
+    public sit() {
+        this.lastSat = moment().toISOString();
+    }
+
+    // Returns how long has been sitting as well
+    public standUp(): number {
+        if (this.lastSat) {
+            const diff = moment(this.lastSat).diff(moment(), 'm');
+            this.lastSat = undefined;
+            return diff;
+        }
+        return 0;
     }
 
 }

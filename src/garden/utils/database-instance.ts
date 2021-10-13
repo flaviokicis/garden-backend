@@ -6,6 +6,8 @@ export abstract class ControllerInstance {
 
     public abstract addInteraction(user: GardenUser, action: ActionType, extra?): void;
 
+    public abstract createUser(nickname: string): Promise<string>;
+
 }
 
 class ControllerInstanceManager {

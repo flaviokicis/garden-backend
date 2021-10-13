@@ -20,14 +20,15 @@ class ConnectionManager extends AbstractConnectionManager {
         if (GardenConfig.users.max_users <= this.connectionMap.size) {
             return false;
         }
+        userManager.addUser(new GardenUser(client.getConnectionId()));
+        this.connectionMap.set(client.getConnectionId(), client);
         const data = await gardenManager.getGardenState();
+        data["playersOnline"] = await this.getGardenersOnline();
         const updateObject = {};
         updateObject["eventType"] = "handshake";
         updateObject["data"] = data;
         const clientData = `data: ${JSON.stringify(updateObject)}\n\n`;
         client.getResponse().write(clientData);
-        userManager.addUser(new GardenUser(client.getConnectionId(), "Jonas"));
-        this.connectionMap.set(client.getConnectionId(), client);
         return true;
     }
 

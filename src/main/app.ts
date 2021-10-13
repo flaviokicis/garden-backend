@@ -12,7 +12,7 @@ import mongoSanitizer from 'express-mongo-sanitize';
 import { errorConverter, errorHandler } from "../middleware/error-handler";
 import gardenManager from "../garden/managers/garden-manager";
 import NodeCronScheduler from "../wrappers/node-cron-wrapper";
-import ControllerInstanceManager from '../garden/utils/DatabaseInstance';
+import ControllerInstanceManager from '../garden/utils/database-instance';
 import userController from "../database/controllers/user-controller";
 import UserController from "../database/controllers/user-controller";
 
