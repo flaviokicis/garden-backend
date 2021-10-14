@@ -18,44 +18,55 @@ class UserController extends ControllerInstance {
         return await UserRepository.getById(id);
     }
 
-    public async getTopUsers(action: ActionType) {
-        // TODO
+    public async getTopUsers(action: string): Promise<Array<string>> {
+        if (!Object.values(ActionType).includes(action.trim().toUpperCase().replace(" ", "_"))) {
+            throw new Error("Action does not exist");
+        }
+        const actionType: number = parseInt(ActionType[Object.values(ActionType)
+            .find((type) => (type === action.trim().toUpperCase().replace(" ", "_"))) as ActionType]);
+        const field = this.getFieldRelated(actionType);
+        const results = await UserRepository.getAll(field, false, 10, "nickname " + field);
+        const array = [];
+        for (let i = 0; i < 10; i++) {
+            if (results.length > i) {
+            let obj = results[i];
+            array.push(obj.nickname + " - " + obj[field]);
+            } else {
+            array.push("---");
+            }
+        }
+        return array;
     }
 
     public async addInteraction(user: GardenUser, action: ActionType, extra?) {
         if (!action) {
             StatsRepository.increase('connections', 1);
         } else {
-            switch (action) {
-                case ActionType.STAND_UP:
-                    StatsRepository.increase('totalMinutesSatOnBench', extra);
-                    UserRepository.increase(user.getId(), 'totalMinutesSatOnBench', extra);
-                    break; 
-                case ActionType.CLEAN:
-                    StatsRepository.increase('totalDecorationsCleaned', 1);
-                    UserRepository.increase(user.getId(), 'decorationsCleaned', 1);
-                    break; 
-                case ActionType.FEED:
-                    StatsRepository.increase('totalAnimalsFed', 1);
-                    UserRepository.increase(user.getId(), 'animalsFed', 1);
-                    break; 
-                case ActionType.PET:
-                    StatsRepository.increase('totalAnimalsPetted', 1);
-                    UserRepository.increase(user.getId(), 'animalsPetted', 1);
-                    break;
-                case ActionType.POLLINATE:
-                    StatsRepository.increase('totalFlowersPollinated', 1);
-                    UserRepository.increase(user.getId(), 'flowersPollinated', 1);
-                    break;
-                case ActionType.HARVEST:
-                    StatsRepository.increase('totalFruitsHarvested', 1);
-                    UserRepository.increase(user.getId(), 'fruitsHarvested', 1);
-                    break; 
-                case ActionType.WATER:
-                    StatsRepository.increase('totalGallonsOfWater', 1);
-                    break;
+            const field = this.getFieldRelated(action) as string;
+            const globalField = "total" + field.charAt(0).toUpperCase() + field.slice(1);
+            StatsRepository.increase(globalField, (action === ActionType.STAND_UP ? extra : 1));
+            if (action !== ActionType.WATER)
+            UserRepository.increase(user.getId(), field, (action === ActionType.STAND_UP ? extra : 1));
             }
-            }
+    }
+
+    private getFieldRelated(type: ActionType): string {
+        switch (+type) {
+            case ActionType.HARVEST:
+                return 'fruitsHarvested';
+            case ActionType.WATER:
+                return 'gallonsOfWater';
+            case ActionType.PET:
+                return 'animalsPetted'
+            case ActionType.FEED:
+                return 'animalsFed';
+            case ActionType.CLEAN:
+                return 'decorationsCleaned';
+            case ActionType.POLLINATE:
+                return 'flowersPollinated';
+            case ActionType.STAND_UP:
+                return 'minutesSatOnBench';
+        }
     }
 
 }

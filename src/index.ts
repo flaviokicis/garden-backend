@@ -8,4 +8,6 @@ const app = new App();
 
 const port: string | number = process.env.APP_PORT || 3000;
 
-app.start(port);
+const server = app.start(port);
+
+export default server;

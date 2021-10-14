@@ -96,7 +96,7 @@ class App {
     }
 
     public start(port: string | number) {
-        this.app.listen(port, () => {
+        return this.app.listen(port, () => {
             Logger.info(`Server listening on port ${port}.`);
         });
     }

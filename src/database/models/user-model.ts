@@ -6,7 +6,7 @@ interface User extends Document {
     nickname: String;
     fruitsHarvested: Number;
     flowersPollinated: Number;
-    decorationsCleaded: Number;
+    decorationsCleaned: Number;
     minutesSatOnBench: Number;
     animalsPetted: Number;
     animalsFed: Number;

@@ -11,7 +11,6 @@ interface Stats extends Document {
     totalDecorationsCleaned: Number;
     totalAnimalsPetted: Number;
     totalAnimalsFed: Number;
-
 }
 
 const statsSchema = new Schema

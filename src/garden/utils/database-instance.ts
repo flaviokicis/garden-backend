@@ -3,6 +3,7 @@ import ActionType from "../enums/action-type";
 
 
 export abstract class ControllerInstance {
+    public abstract getTopUsers(action: string): Promise<Array<string>>;
 
     public abstract addInteraction(user: GardenUser, action: ActionType, extra?): void;
 

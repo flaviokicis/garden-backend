@@ -33,8 +33,4 @@ updateRouter.post('/', authentication, async (req: Request, res: Response, next)
     }
 });
 
-updateRouter.post('/', authentication, async (req: Request, res: Response, next) => {
-
-});
-
 export default updateRouter;
