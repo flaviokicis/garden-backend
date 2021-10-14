@@ -26,7 +26,7 @@ abstract class BaseEntity {
 
     public abstract canPerform(user: GardenUser, action: ActionType): boolean;
 
-    public abstract execute(user: GardenUser, action: ActionType): void;
+    public abstract execute(user: GardenUser, action: ActionType): any;
 
     public abstract toState(user?: GardenUser): Object;
 

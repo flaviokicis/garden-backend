@@ -15,31 +15,46 @@ class UserController extends ControllerInstance {
     }
 
     public async getUser(id) {
-        if (!id) {
-            createResponse(httpError.BAD_REQUEST, "ID is not valid");
-        }
-        let objID: mongoose.Types.ObjectId;
-        try {
-            objID = new mongoose.Types.ObjectId(id);
-        } catch (error) {
-            throw new Error("ID is not a valid Mongo id");
-        }
         return await UserRepository.getById(id);
     }
 
     public async getTopUsers(action: ActionType) {
-
+        // TODO
     }
 
     public async addInteraction(user: GardenUser, action: ActionType, extra?) {
-            try {
-                switch (action) {
-                    case ActionType.STAND_UP:
-                        StatsRepository.increase('totalMinutesSatOnBench', extra);
-                        break; 
-                }
-            } catch (error) {
-                throw error;
+        if (!action) {
+            StatsRepository.increase('connections', 1);
+        } else {
+            switch (action) {
+                case ActionType.STAND_UP:
+                    StatsRepository.increase('totalMinutesSatOnBench', extra);
+                    UserRepository.increase(user.getId(), 'totalMinutesSatOnBench', extra);
+                    break; 
+                case ActionType.CLEAN:
+                    StatsRepository.increase('totalDecorationsCleaned', 1);
+                    UserRepository.increase(user.getId(), 'decorationsCleaned', 1);
+                    break; 
+                case ActionType.FEED:
+                    StatsRepository.increase('totalAnimalsFed', 1);
+                    UserRepository.increase(user.getId(), 'animalsFed', 1);
+                    break; 
+                case ActionType.PET:
+                    StatsRepository.increase('totalAnimalsPetted', 1);
+                    UserRepository.increase(user.getId(), 'animalsPetted', 1);
+                    break;
+                case ActionType.POLLINATE:
+                    StatsRepository.increase('totalFlowersPollinated', 1);
+                    UserRepository.increase(user.getId(), 'flowersPollinated', 1);
+                    break;
+                case ActionType.HARVEST:
+                    StatsRepository.increase('totalFruitsHarvested', 1);
+                    UserRepository.increase(user.getId(), 'fruitsHarvested', 1);
+                    break; 
+                case ActionType.WATER:
+                    StatsRepository.increase('totalGallonsOfWater', 1);
+                    break;
+            }
             }
     }
 

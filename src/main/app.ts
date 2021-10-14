@@ -11,10 +11,10 @@ import xssSanitizer from 'xss-clean';
 import mongoSanitizer from 'express-mongo-sanitize';
 import { errorConverter, errorHandler } from "../middleware/error-handler";
 import gardenManager from "../garden/managers/garden-manager";
-import NodeCronScheduler from "../wrappers/node-cron-wrapper";
+import NodeCronScheduler from "../implementations/nc-scheduler";
 import ControllerInstanceManager from '../garden/utils/database-instance';
-import userController from "../database/controllers/user-controller";
 import UserController from "../database/controllers/user-controller";
+import connectionManager from "../managers/connection-manager";
 
 class App {
 
@@ -28,6 +28,7 @@ class App {
         this.loadMiddleware();
         this.loadGarden();
         this.loadRoutes();
+        this.setDisable();
     }
 
     private async loadDatabase() {
@@ -84,6 +85,7 @@ class App {
     private loadGarden() {
         gardenManager.setScheduler(new NodeCronScheduler())
         gardenManager.setupGarden();
+        gardenManager.startFruitSpawn();
     }
 
     private loadRoutes() {
@@ -97,6 +99,16 @@ class App {
         this.app.listen(port, () => {
             Logger.info(`Server listening on port ${port}.`);
         });
+    }
+
+    public setDisable() {
+        process.on('SIGTERM', this.onDisable);
+        process.on('SIGINT', this.onDisable);
+    }
+
+    public onDisable() {
+        Logger.info("Closing all connections...");
+        connectionManager.disconnectAll();
     }
 
 }

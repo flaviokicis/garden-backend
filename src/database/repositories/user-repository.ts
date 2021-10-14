@@ -1,5 +1,6 @@
 import userModel from "../models/user-model";
 import RepositoryBase from "./base/repository-base";
+import mongoose from 'mongoose';
 
 
 class UserRepository {
@@ -27,6 +28,17 @@ class UserRepository {
             params["limit"] = limit;
         }
         return await this.base.getAll(params, projection);
+    }
+
+    public async increase(id, field, value) {
+        const data = {};
+        data[field] = value;
+        const objId = new mongoose.Types.ObjectId(id);
+        if (!(await this.base.getById(objId)))
+            return await this.base.create(data);
+        else {
+            return await this.base.updateIncrease(objId, data);
+        }
     }
 
 }

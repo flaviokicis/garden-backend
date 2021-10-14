@@ -27,9 +27,14 @@ abstract class BaseFlower extends BaseEntity {
         }
     }
 
+    // Enforce watering the plant
     public canPerform(user: GardenUser, action: ActionType): boolean {
-        if (action === ActionType.POLLINATE)
+        if (action === ActionType.POLLINATE) {
+            if (this.canWater()) {
+                return false;
+            }
             return this.canPollinate();
+        }
         else if (action === ActionType.WATER) {
             return this.canWater();
         } else return false;

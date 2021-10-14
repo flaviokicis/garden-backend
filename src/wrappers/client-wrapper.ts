@@ -7,11 +7,14 @@ class ClientWrapper {
 
     private response: Response;
 
-    private ipAddress;
+    private nickname: string;
 
-    constructor(id: string, response: Response, ipAddress) {
+    private ipAddress: string;
+
+    constructor(id: string, response: Response, ipAddress: string, nickname: string) {
         this.connectionId = id;
         this.response = response;
+        this.nickname = nickname;
         this.ipAddress = ipAddress;
     }
 
@@ -23,7 +26,11 @@ class ClientWrapper {
         return this.response;
     }
 
-    public getIPAddress() {
+    public getNickname(): string {
+        return this.nickname;
+    }
+
+    public getIPAddress(): string {
         return this.ipAddress;
     }
 

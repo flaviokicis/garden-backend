@@ -7,7 +7,7 @@
 garden:
   fruits:
     strawberries: 3
-    apples: 4
+    apples: 2
   flowers:
     sunflowers: 3
     roses: 2
@@ -22,12 +22,12 @@ garden:
 fruits:
   apple:
     max: 5
-    respawn_interval: '1 h'
-    harvesting_interval: '45 m'
+    growth_interval: '35 m'
+    harvesting_interval: '1 h'
     watering_interval: '4 h'
   strawberry:
     max: 4
-    respawn_interval: '35 m'
+    growth_interval: '35 m'
     harvesting_interval: '30 m'
     watering_interval: '45 m'
 
@@ -48,11 +48,11 @@ decorations:
 
 animals:
   dog:
-    petting_interval: '15 m'
-    feeding_interval: '20 m'
+    petting_interval: '5 m'
+    feeding_interval: '35 m'
   duck:
-    petting_interval: '35 m'
-    feeding_interval: '30 m'
+    petting_interval: '15 m'
+    feeding_interval: '45 m'
 
 users:
   max_users: 4

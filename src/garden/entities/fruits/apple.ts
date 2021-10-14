@@ -1,3 +1,4 @@
+import ActionType from "../../enums/action-type";
 import EntityType from "../../enums/entity-type";
 import gardenManager from "../../managers/garden-manager";
 import Scheduler from "../scheduler";
@@ -28,7 +29,7 @@ export default class Apple extends BaseFruit {
 
     protected init() {
         this.waterFruit(null);
-        this.scheduler.scheduleTask(this.harvestTime, () => {
+        this.scheduler.scheduleTaskOnce(this.harvestTime, () => {
             this.ableToHarvest = true;
         })
     }
@@ -52,11 +53,8 @@ export default class Apple extends BaseFruit {
     public harvestFruit(user: GardenUser): void {
         this.ableToHarvest = false;
         this.harvested = true;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.harvestTime, async () => {
-            this.ableToHarvest = true;
-            gardenManager.updateState(this);
-        });
+        gardenManager.updateState(this, user, ActionType.HARVEST);
+        gardenManager.deleteEntity(this);
     }
 
     public hasBeenHarvested(): boolean {
@@ -65,8 +63,8 @@ export default class Apple extends BaseFruit {
 
     public waterFruit(user: GardenUser): void {
         this.ableToWater = false;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.waterTime, async () => {
+        gardenManager.updateState(this, user, ActionType.WATER);
+        this.scheduler.scheduleTaskOnce(this.waterTime, async () => {
             this.ableToWater = true;
             gardenManager.updateState(this);
         });

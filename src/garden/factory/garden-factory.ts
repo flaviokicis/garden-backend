@@ -2,6 +2,7 @@ import GardenConfig from "../../main/config";
 import Dog from "../entities/animals/dog";
 import Duck from "../entities/animals/duck";
 import BaseEntity from "../entities/base/base-entity";
+import Bench from "../entities/decorations/bench";
 import Orchid from "../entities/flowers/orchid";
 import Rose from "../entities/flowers/rose";
 import Sunflower from "../entities/flowers/sunflower";
@@ -46,6 +47,10 @@ class GardenFactory {
     public createDuck(): Duck {
         return new Duck(-1, GardenConfig.animals.duck.petting_interval,
             GardenConfig.animals.duck.feeding_interval);
+    }
+
+    public createBench(): Bench {
+        return new Bench(-1, GardenConfig.decorations.bench.cleaning_interval);
     }
 
 }

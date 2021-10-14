@@ -1,3 +1,4 @@
+import ActionType from "../../enums/action-type";
 import EntityType from "../../enums/entity-type";
 import gardenManager from "../../managers/garden-manager";
 import Scheduler from "../scheduler";
@@ -46,8 +47,8 @@ export default class Dog extends BaseAnimal {
 
     public petAnimal(user: GardenUser): void {
         this.ableToPet = false;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.petTime, async () => {
+        gardenManager.updateState(this, user, ActionType.PET);
+        this.scheduler.scheduleTaskOnce(this.petTime, async () => {
             this.ableToPet = true;
             gardenManager.updateState(this);
         });
@@ -55,8 +56,8 @@ export default class Dog extends BaseAnimal {
 
     public feedAnimal(user: GardenUser): void {
         this.ableToFeed = false;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.feedTime, async () => {
+        gardenManager.updateState(this, user, ActionType.FEED);
+        this.scheduler.scheduleTaskOnce(this.feedTime, async () => {
             this.ableToFeed = true;
             gardenManager.updateState(this);
         });

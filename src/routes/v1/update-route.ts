@@ -13,7 +13,7 @@ updateRouter.post('/', authentication, async (req: Request, res: Response, next)
     const id = req.body.userID;
     
     if (!(await connectionManager.isConnected(id))) {
-       return next(createResponse(403, "You are not in the garden right now."));
+       return next(createResponse(403, "You are not in the garden!"));
     }
 
     if (!req.body.action) {
@@ -27,9 +27,14 @@ updateRouter.post('/', authentication, async (req: Request, res: Response, next)
     const entityId = req.body.entityId;
     try {
     await gardenManager.interact(id, action, entityId);
+    next(createResponse(200, "Done"))
     } catch (error: any) {
         next(createResponse(500, error.message));
     }
+});
+
+updateRouter.post('/', authentication, async (req: Request, res: Response, next) => {
+
 });
 
 export default updateRouter;

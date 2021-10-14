@@ -6,7 +6,9 @@ interface User extends Document {
     nickname: String;
     fruitsHarvested: Number;
     flowersPollinated: Number;
+    decorationsCleaded: Number;
     minutesSatOnBench: Number;
+    animalsPetted: Number;
     animalsFed: Number;
 
 }
@@ -26,6 +28,14 @@ const userSchema = new Schema
             default: 0
         },
         minutesSatOnBench: {
+            type: Number,
+            default: 0
+        },
+        decorationsCleaned: {
+            type: Number,
+            default: 0
+        },
+        animalsPetted: {
             type: Number,
             default: 0
         },

@@ -1,3 +1,4 @@
+import ActionType from "../../enums/action-type";
 import EntityType from "../../enums/entity-type";
 import gardenManager from "../../managers/garden-manager";
 import Scheduler from "../scheduler";
@@ -46,8 +47,8 @@ export default class Sunflower extends BaseFlower {
 
     public pollinateFlower(user: GardenUser): void {
         this.ableToPollinate = false;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.pollinateTime, async () => {
+        gardenManager.updateState(this, user, ActionType.POLLINATE);
+        this.scheduler.scheduleTaskOnce(this.pollinateTime, async () => {
             this.ableToPollinate = true;
             gardenManager.updateState(this);
         });
@@ -55,8 +56,8 @@ export default class Sunflower extends BaseFlower {
 
     public waterFlower(user: GardenUser): void {
         this.ableToWater = false;
-        gardenManager.updateState(this, user);
-        this.scheduler.scheduleTask(this.waterTime, async () => {
+        gardenManager.updateState(this, user, ActionType.WATER);
+        this.scheduler.scheduleTaskOnce(this.waterTime, async () => {
             this.ableToWater = true;
             gardenManager.updateState(this);
         });

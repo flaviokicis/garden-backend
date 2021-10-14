@@ -6,7 +6,10 @@ interface Stats extends Document {
     connections: Number;
     totalFruitsHarvested: Number;
     totalFlowersPollinated: Number;
+    totalGallonsOfWater: Number;
     totalMinutesSatOnBench: Number;
+    totalDecorationsCleaned: Number;
+    totalAnimalsPetted: Number;
     totalAnimalsFed: Number;
 
 }
@@ -26,7 +29,19 @@ const statsSchema = new Schema
             type: Number,
             default: 0
         },
+        totalGallonsOfWater: {
+            type: Number,
+            default: 0
+        },
         totalMinutesSatOnBench: {
+            type: Number,
+            default: 0
+        },
+        totalDecorationsCleaned: {
+            type: Number,
+            default: 0
+        },
+        totalAnimalsPetted: {
             type: Number,
             default: 0
         },

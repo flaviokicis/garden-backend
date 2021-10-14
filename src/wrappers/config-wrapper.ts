@@ -21,8 +21,8 @@ export interface GardenType {
 
 export interface FruitsType {
 
-    apple: {max: number, respawn_interval: string, harvesting_interval: string, watering_interval: string},
-    strawberry: {max: number, respawn_interval: string, harvesting_interval: string, watering_interval: string}
+    apple: {max: number, growth_interval: string, harvesting_interval: string, watering_interval: string},
+    strawberry: {max: number, growth_interval: string, harvesting_interval: string, watering_interval: string}
 
 }
 
@@ -36,7 +36,7 @@ export interface FlowersType {
 
 export interface DecorationsType {
 
-    bench: { bench: {cleaning_interval: string}}
+    bench: {cleaning_interval: string}
 
 }
 

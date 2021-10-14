@@ -3,13 +3,21 @@ import authentication from "../../middleware/auth";
 import { generateToken } from "../../utils/jwt-helper";
 import createResponse from "../../factory/response-factory";
 import ControllerInstanceManager from '../../garden/utils/database-instance';
+import GardenConfig from "../../main/config";
 
 const authRouter = express.Router();
 
 authRouter.post('/login', async (req: Request, res: Response, next) => {
     const nickname = req.body.nickname;
     if (!nickname) {
-        return next(createResponse(400, "Invalid Nickname"));
+        return next(createResponse(401, "Invalid Nickname"));
+    }
+    if (nickname.length > GardenConfig.users.max_nickname_length) {
+        return next(createResponse(401, "Nickname too long"));
+    }
+    var regex = /^[a-zA-Z0-9_]+$/;
+    if (!regex.test(nickname)) {
+        return next(createResponse(401, "Nickname contains invalid characters"));
     }
     const id = await ControllerInstanceManager.getInstance().createUser(nickname);
     const token = generateToken(id, nickname);

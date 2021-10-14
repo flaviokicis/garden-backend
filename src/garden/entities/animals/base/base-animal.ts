@@ -27,9 +27,14 @@ abstract class BaseAnimal extends BaseEntity {
         }
     }
 
+    // The poor thing is hungry, feed it first
     public canPerform(user: GardenUser, action: ActionType): boolean {
-        if (action === ActionType.PET)
+        if (action === ActionType.PET) {
+            if (this.canFeed()) {
+                return false;
+            }
             return this.canPet();
+        }
         else if (action === ActionType.FEED) {
             return this.canFeed();
         } else return false;
