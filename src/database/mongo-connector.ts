@@ -10,6 +10,7 @@ class MongoDatabase {
         } catch (error) {
             Logger.error("There was an error when attempting to connect to MongoDB. "
                 + "Check connection string and Database.");
+            Logger.error(error);
         }
     }
 

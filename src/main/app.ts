@@ -22,6 +22,8 @@ class App {
 
     private db: MongoDatabase = new MongoDatabase();
 
+    private closeFunction;
+
     constructor() {
         this.loadDatabase();
         this.setHeaders();
@@ -95,7 +97,7 @@ class App {
         this.app.use(errorHandler);
     }
 
-    public start(port: string | number) {
+    public start(port: string | number, closeFunction) {
         return this.app.listen(port, () => {
             Logger.info(`Server listening on port ${port}.`);
         });
@@ -109,6 +111,7 @@ class App {
     public onDisable() {
         Logger.info("Closing all connections...");
         connectionManager.disconnectAll();
+        this.closeFunction();
     }
 
 }
