@@ -8,7 +8,7 @@ import {ConfigWrapper} from '../wrappers/config-wrapper';
 
 
 const config = YAML.parse(fs.readFileSync
-    (path.join(__dirname, '../../garden-config.yml'), 'utf8'));
+    (path.join(__dirname, (process.env.ENV_TYPE === 'DEV' ? "" : "../") + '../../garden-config.yml'), 'utf8'));
 
 
 

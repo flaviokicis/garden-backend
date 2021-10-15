@@ -1,10 +1,8 @@
 import express, { Request, Response } from "express"
 import createResponse from "../../factory/response-factory";
 import gardenManager from "../../garden/managers/garden-manager";
-import Logger from "../../logger/winston-Logger";
 import connectionManager from "../../managers/connection-manager";
 import authentication from "../../middleware/auth";
-import ClientWrapper from "../../wrappers/client-wrapper";
 
 const updateRouter = express.Router();
 

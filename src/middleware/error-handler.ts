@@ -1,5 +1,4 @@
 import Mongoose from "mongoose";
-import httpErrors from 'http-status-enum';
 import Logger from "../logger/winston-logger";
 
 import ResponseWrapper from "../wrappers/response-wrapper";
@@ -16,10 +15,10 @@ const errorConverter = (err, req: Request, res: Response, next: NextFunction) =>
         let code: number =
             error.statusCode ||
                 error instanceof Mongoose.Error ?
-                httpErrors.BAD_REQUEST : httpErrors.INTERNAL_SERVER_ERROR;
+                400 : 500;
         // @ts-ignore 
-        const message = error.message || httpErrors[code];
-        error = new ResponseWrapper(code, message, err.stack, false);
+        const message = error.message || "Internal Error";
+        error = new ResponseWrapper(code, message, err.stack, true);
     }
     next(error);
 };
@@ -30,9 +29,8 @@ const errorHandler = (err: ResponseWrapper, req: Request, res: Response, next: N
     let message = err.getMessage();
 
     if (process.env.ENV_TYPE === 'PROD' && !err.getCarryOn()) {
-        code = httpErrors.INTERNAL_SERVER_ERROR;
-        // @ts-ignore
-        message = httpErrors[httpErrors.INTERNAL_SERVER_ERROR] as string;
+        code = 500;
+        message = "Internal Server Error";
     }
 
     res.locals.errorMessage = message;
@@ -43,12 +41,7 @@ const errorHandler = (err: ResponseWrapper, req: Request, res: Response, next: N
         ...(process.env.ENV_TYPE === 'DEV' && { stack: err.getJson() }),
     };
 
-    if (process.env.ENV_TYPE === 'DEV') {
-        if (code < 500)
-        Logger.info(err);
-        else
-        Logger.error(err);
-    }
+    Logger.error(err);
 
     res.status(code).send(response);
 };

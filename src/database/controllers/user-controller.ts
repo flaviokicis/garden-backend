@@ -3,7 +3,6 @@ import ActionType from "../../garden/enums/action-type";
 import StatsRepository from "../repositories/stats-repository";
 import mongoose from "mongoose";
 import createResponse from "../../factory/response-factory";
-import httpError from 'http-status-enum'
 import { ControllerInstance } from "../../garden/utils/database-instance";
 import GardenUser from "../../garden/entities/user";
 

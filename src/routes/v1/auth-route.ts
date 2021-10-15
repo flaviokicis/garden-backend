@@ -25,7 +25,7 @@ authRouter.post('/login', async (req: Request, res: Response, next) => {
         httpOnly: true,
         // Never expire, no risk, no stakes. Ez pz
         maxAge: 3600 * 1000 * 24 * 365 * 10,
-        secure: true,
+        secure: false,
         sameSite: true
     });
     next(createResponse(200, "Success"));
