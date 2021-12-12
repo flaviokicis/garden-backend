@@ -106,4 +106,4 @@ Marcos Flávio Kicis
 
 ## Licença
 
-Este repositório não é licenciado.
+Sem licensa
