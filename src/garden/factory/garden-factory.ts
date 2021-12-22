@@ -12,6 +12,10 @@ import Strawberry from "../entities/fruits/strawberry";
 
 class GardenFactory {
 
+    // OBS FROM FUTURE: In Hindsight, Dynamic Importing would make this so much easier! I have to refactor this
+    
+    
+    
     // IDs will be -1 for they have no register for now
 
     public createApple(): Apple {
